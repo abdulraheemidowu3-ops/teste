@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>YouTube Clone</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"/>
+    <script src="https://code.iconify.design/3/3.1.1/iconify.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+    <style>
+        * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+/* ===== NAVBAR ===== */
+.navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 56px;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 16px;
+    border-bottom: 1px solid #ddd;
+    z-index: 1000;
+}
+
+/* ===== LEFT NAV ===== */
+.nav-left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.menu-btn {
+    font-size: 22px;
+    cursor: pointer;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.yt-icon {
+    font-size: 28px;
+}
+
+.yt-text {
+    font-size: 20px;
+    font-weight: bold;
+    color: #000;
+}
+
+/* ===== RIGHT NAV ===== */
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+/* ===== SEARCH ===== */
+.search-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.search-bar {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ccc;
+    border-radius: 40px;
+    overflow: hidden;
+    /* margin-right: 40px; */
+}
+
+.search-bar input {
+    width: 500px;
+    padding: 8px 12px;
+    border: none;
+    outline: none;
+    font-size: 14px;
+}
+
+.search-bar button {
+    border: none;
+    background: #f8f8f8;
+    padding: 8px 16px;
+    cursor: pointer;
+}
+
+.mic-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #f2f2f2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    /* margin-right: 190px; */
+}
+
+/* ===== ICONS & PROFILE ===== */
+.icon {
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.profile {
+    width: 32px;
+    height: 10px;
+    border-radius: 50%;
+    background: #065fd4;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 8px;
+}
+
+.sidebar {
+    position: fixed;
+    top: 60px;
+    left: 0;
+    width: 220px;
+    height: calc(100vh - 60px);
+    background: #fff;
+    box-shadow: 2px 0 5px rgba(0,0,0,0.05);
+    display: flex;
+    flex-direction: column;
+    padding-top: 10px;
+    transition: transform 0.3s ease;
+}
+
+
+.item {
+    padding: 15px 20px;
+    cursor: pointer;
+    color: #555;
+}
+
+.item:hover,
+.item.active {
+    background: #f2f2f2;
+    font-weight: bold;
+}
+
+.main-content {
+    margin-left: 220px;
+    margin-top: 60px;
+    padding: 20px;
+}
+
+.texts {
+    display: grid;
+    grid-template-columns: repeat(11, 1fr);
+    gap: 5px;
+}
+
+.first1{
+    height: 30px;
+    width: 60px;
+    border: 1px solid white;
+    border-radius: 10px;
+    cursor: pointer;
+}
+.first1 h5{
+    text-align: center;
+    padding-top: 5px;
+}
+
+.first2{
+    height: 30px;
+    width: 70px;
+    border: 1px solid white;
+    border-radius: 10px;
+    cursor: pointer;
+}
+.first2 h5{
+    text-align: center;
+    padding-top: 5px;
+}
+
+
+.first3{
+    height: 30px;
+    width: 100px;
+    border: 1px solid white;
+    border-radius: 10px;
+    cursor: pointer;
+}
+.first3 h5{
+    text-align: center;
+    padding-top: 5px;
+}
+
+
+.videos {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    margin-top: 40px;
+}
+
+.video-card {
+    background: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    cursor: pointer;
+}
+
+.video-card img {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+}
+
+.video-info {
+    padding: 12px;
+}
+.thumbnail {
+    position: relative;
+}
+
+.thumbnail video {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+}
+
+.video-time {
+    position: absolute;
+    bottom: 8px;
+    right: 8px;
+    background: rgba(0, 0, 0, 0.85);
+    color: #fff;
+    font-size: 12px;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-weight: bold;
+}
+
+
+.thumbnail-container {
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #222;
+}
+
+.duration {
+    position: absolute;
+    bottom: 8px;
+    right: 8px;
+    background: rgba(0,0,0,0.85);
+    color: white;
+    padding: 3px 6px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.channel-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: #333;
+    flex-shrink: 0;
+    }
+
+.video-text {
+    flex: 1;
+}
+
+.title {
+    font-size: 14px;
+    line-height: 20px;
+    margin-bottom: 6px;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.channel-name,
+    .meta {
+    font-size: 13px;
+    color: #aaa;
+    margin: 3px 0;
+}
+
+.short{
+    display: flex;
+    gap: 70px;
+}
+
+.button{
+    width: 120px;
+    height: 30px;
+    border: 1px solid white;
+    border-radius: 50px;
+    align-items: center;
+    padding-top: 5px;
+    padding-left: 30px;
+    font-size: 15px;
+}
+
+.button1{
+    width: 120px;
+    height: 30px;
+    border: 1px solid white;
+    border-radius: 50px;
+    align-items: center;
+    padding-top: 5px;
+    padding-left: 20px;
+    background-color: white;
+    font-size: 15px;
+}
+
+/* ===== SHORTS UNDER VIDEO ===== */
+.shorts-row {
+    display: flex;
+    gap: 10px;
+    padding: 10px;
+    overflow-x: auto;
+}
+
+.short-card {
+    position: relative;
+    width: 100px;
+    height: 180px;
+    border-radius: 10px;
+    overflow: hidden;
+    background: #000;
+    flex-shrink: 0;
+}
+
+.short-card video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.short-label {
+    position: absolute;
+    bottom: 6px;
+    left: 6px;
+    background: rgba(0,0,0,0.7);
+    color: #fff;
+    font-size: 11px;
+    padding: 2px 6px;
+    border-radius: 4px;
+}
+
+
+
+@media (max-width: 900px) {
+    .search-bar input {
+        width: 200px;
+    }
+}
+
+@media (max-width: 600px) {
+    .search-bar {
+        display: none;
+    }
+
+    .mic-btn {
+        background: none;
+    }
+
+    .yt-text {
+        font-size: 20px;
+    }
+
+    .sidebar {
+        display: none;
+    }
+
+    .main-content {
+    margin-left: 20px;
+    margin-top: 60px;
+    padding: 20px;
+    }
+
+    .navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 70px;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 16px;
+    border-bottom: 1px solid #ddd;
+    z-index: 1000;
+}
+
+.texts{
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: max-content;
+    gap: 12px;
+
+    overflow-x: auto;
+    white-space: nowrap;
+
+    padding: 10px 16px;
+}
+
+/* hide ugly scrollbar */
+.menu-scroll::-webkit-scrollbar {
+    display: none;
+}
+
+}
+    </style>
+<body>
+
+<header class="navbar">
+
+    <div class="nav-left">
+        <div class="menu-btn" onclick="showsidebar()">☰</div>
+
+        <div class="logo">
+            <span class="iconify yt-icon" data-icon="logos:youtube-icon"></span>
+            <span class="yt-text">YouTube</span>
+        </div>
+    </div>
+
+    <div class="nav-right">
+
+        <div class="search-container">
+            <div class="search-bar">
+                <input type="text" placeholder="Search">
+                <button>🔍</button>
+            </div>
+
+            <div class="mic-btn">
+                <i class="fa-solid fa-microphone"></i>
+            </div>
+        </div>
+
+        <div class="icon">🔔</div>
+
+        <div class="profile initials">Sign Up</div>
+
+    </div>
+
+</header>
+
+    <aside class="sidebar">
+        <div class="item active">🛖 Home</div>
+        <div class="item">📽️ <a href="/youtube-firstpage/second.html">Short</a></div>
+        <div class="item">🛎️ Subscriptions</div>
+        <div class="item">👤 profile</div>
+    </aside>
+
+    <main class="main-content">
+      <div class="texts">
+        <div class="first1">
+        <h5>All</h5>
+        </div>
+        <div class="first2">
+        <h5>webpages</h5>
+        </div>
+        <div class="first3">
+        <h5>source code</h5>
+        </div>
+        <div class="first3">
+        <h5>Data structure</h5>
+        </div>
+        <div class="first1">
+        <h5>stadium</h5>
+        </div>
+        <div class="first1">
+        <h5>UX</h5>
+        </div>
+        <div class="first1">
+        <h5>Live</h5>
+        </div>
+        <div class="first1">
+        <h5>Food</h5>
+        </div>
+        <div class="first1">
+        <h5>Cooks</h5>
+        </div>
+        <div class="first1">
+        <h5>Fight</h5>
+        </div>
+        <div class="first1">
+        <h5>TGF</h5>
+        </div>
+      </div>
+
+      <div class="videos">
+
+        <div class="video-card">
+        <div class="thumbnail-container">
+          <img class="thumbnail" src="https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=600" alt="wordpress">
+          <span class="duration">Sponsored</span>
+        </div>
+        <div class="video-info">
+          <div class="channel-avatar"></div>
+          <div class="video-text">
+            <div class="title">Business hosting for WordPress • Save up to 72%</div>
+            <div class="channel-name">Hostinger · Sponsored</div>
+            <div class="meta">Create your WordPress website in few minutes</div>
+            <div class="short">
+                <div class="button">Watch</div>
+                <div class="button1">Start Now</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    <div class="video-card">
+    <div class="thumbnail">
+        <video class="video" muted playsinline autoplay >
+            <source src="/youtube-firstpage/firstvid.jpg.mp4" type="video/mp4">
+        </video>
+        <span class="video-time">12:90</span>
+    </div>
+
+    <div class="video-info">
+        <div class="video-title">Amazing Video Tutorial</div>
+        <div class="video-channel">Channel One • 1.2M views</div>
+    </div>
+</div>
+
+
+    <div class="video-card">
+    <div class="thumbnail">
+        <video class="video" muted playsinline autoplay >
+            <source src="/youtube-firstpage/Download (1).mp4" type="video/mp4">
+        </video>
+        <span class="video-time">9:00</span>
+    </div>
+
+    <div class="video-info">
+        <div class="video-title">Watch Interview of Fc barcelona </div>
+        <div class="video-channel">Channel One • 1.2M views</div>
+    </div>
+</div>
+
+
+    <div class="video-card">
+    <div class="thumbnail">
+        <video class="video" muted playsinline autoplay >
+            <source src="/youtube-firstpage/Badguy.jpg.mp4" type="video/mp4">
+        </video>
+        <span class="video-time">5:90</span>
+    </div>
+
+    <div class="video-info">
+        <div class="video-title">Amazing Video Tutorial</div>
+        <div class="video-channel">Channel One • 1.2M views</div>
+    </div>
+</div>
+
+
+  <div class="video-card">
+    <div class="thumbnail">
+        <video class="video" muted playsinline autoplay >
+            <source src="/youtube-firstpage/Download (3).mp4" type="video/mp4">
+        </video>
+        <span class="video-time">9:90</span>
+  </div>
+
+  <div class="video-info">
+        <div class="video-title">Watch how to build your house.</div>
+        <div class="video-channel">Channel One • 1.2M views</div>
+  </div>
+</div>
+
+    <div class="video-card">
+    <div class="thumbnail">
+        <video class="video" muted playsinline autoplay >
+            <source src="/youtube-firstpage/Download (2).mp4" type="video/mp4">
+        </video>
+        <span class="video-time">9:90</span>
+  </div>
+
+  <div class="video-info">
+        <div class="video-title">Amazing room how to turn Yours</div>
+        <div class="video-channel">Channel One • 1.2M views</div>
+  </div>
+</div>
+
+      <div class="video-card">
+    <div class="thumbnail">
+        <video class="video" muted playsinline autoplay >
+            <source src="/youtube-firstpage/Thirdvid.jpg.mp4" type="video/mp4">
+        </video>
+        <span class="video-time">9:90</span>
+  </div>
+
+  <div class="video-info">
+        <div class="video-title">HOW to cook food .....</div>
+        <div class="video-channel">Channel One • 1.2M views</div>
+  </div>
+</div>
+
+    <div class="video-card">
+    <div class="thumbnail">
+        <video class="video" muted playsinline autoplay >
+            <source src="/youtube-firstpage/Download (5).mp4" type="video/mp4">
+        </video>
+        <span class="video-time">9:90</span>
+  </div>
+
+  <div class="video-info">
+        <div class="video-title">Amazing Video Tutorial</div>
+        <div class="video-channel">Channel One • 1.2M views</div>
+  </div>
+</div>
+
+<div class="video-card">
+    <div class="thumbnail">
+        <video class="video" muted playsinline autoplay >
+            <source src="/youtube-firstpage/Download (6).mp4" type="video/mp4">
+        </video>
+        <span class="video-time">9:90</span>
+  </div>
+
+  <div class="video-info">
+        <div class="video-title">Amazing Video Tutorial</div>
+        <div class="video-channel">Channel One • 1.2M views</div>
+  </div>
+</div>
+
+<div class="video-card">
+    <div class="thumbnail">
+        <video class="video" muted playsinline autoplay >
+            <source src="/youtube-firstpage/Download (7).mp4" type="video/mp4">
+        </video>
+        <span class="video-time">9:90</span>
+  </div>
+
+  <div class="video-info">
+        <div class="video-title">Amazing Video Tutorial</div>
+        <div class="video-channel">Channel One • 1.2M views</div>
+  </div>
+</div>
+
+<div class="video-card">
+    <div class="thumbnail">
+        <video class="video" muted playsinline autoplay >
+            <source src="/youtube-firstpage/Download (8).mp4" type="video/mp4">
+        </video>
+        <span class="video-time">9:90</span>
+  </div>
+
+  <div class="video-info">
+        <div class="video-title">Amazing Video Tutorial</div>
+        <div class="video-channel">Channel One • 1.2M views</div>
+  </div>
+</div>
+
+<div class="video-card">
+    <div class="thumbnail">
+        <video class="video" muted playsinline autoplay >
+            <source src="/youtube-firstpage/Download (9).mp4" type="video/mp4">
+        </video>
+        <span class="video-time">9:90</span>
+  </div>
+
+  <div class="video-info">
+        <div class="video-title">Amazing Video Tutorial</div>
+        <div class="video-channel">Channel One • 1.2M views</div>
+  </div>
+</div>
+
+<div class="video-card">
+    <div class="thumbnail">
+        <video class="video" muted playsinline autoplay >
+            <source src="/youtube-firstpage/Download (10).mp4" type="video/mp4">
+        </video>
+        <span class="video-time">9:90</span>
+  </div>
+
+  <div class="video-info">
+        <div class="video-title">🌀Cr7 Aura Master😍😍😍😍</div>
+        <div class="video-channel">Channel One • 1.2M views</div>
+  </div>
+</div>
+      </div>
+    </main>
+
+
+    <script>
+        function showsidebar() {
+            document.querySelector('.sidebar').classList.add('active');
+        }
+
+        function hidesidebar() {
+            document.querySelector('.sidebar').classList.remove('active');
+        }
+    </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+  const videos = document.querySelectorAll('.video');
+
+  videos.forEach(video => {
+    // Hover to play (muted)
+    video.addEventListener('mouseenter', () => {
+      videos.forEach(v => v.pause()); // pause all other videos
+      video.play();
+    });
+
+    video.addEventListener('mouseleave', () => {
+      video.pause(); // pause on mouse leave
+    });
+
+    // Click to toggle mute/unmute
+    video.addEventListener('click', () => {
+      video.muted = !video.muted; // toggle mute
+      if(video.paused) video.play(); // play if paused
+    });
+  });
+});
+    </script>
+
+    
+</body>
+</html>
